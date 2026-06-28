@@ -162,7 +162,7 @@ form {
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  grid-template-columns: 1fr;
   gap: 18px;
 }
 
@@ -527,12 +527,6 @@ label > .field-note {
   color: var(--text-faint);
   font-size: 0.85rem;
   margin-top: 8px;
-}
-
-@media (max-width: 960px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {
