@@ -2,7 +2,6 @@
   "name": "nutri-calculator",
   "version": "1.0.0",
   "description": "Static nutrition macro calculator (BMR/TDEE/macros) with no build step.",
-  "type": "module",
   "scripts": {
     "test": "node --test"
   },

@@ -1,14 +1,3 @@
-import {
-  lbsToKg,
-  kgToLbs,
-  feetInchesToCm,
-  cmToFeetInches,
-  computeBMR,
-  formatNumber,
-  goalAdjustments,
-  calculateMacros,
-} from './calc.js';
-
 const THEME_KEY = 'nutri-calculator-theme';
 
 function applyTheme(theme) {

@@ -1,19 +1,19 @@
 const LBS_PER_KG = 2.20462262185;
 const CM_PER_INCH = 2.54;
 
-export function lbsToKg(lbs) {
+function lbsToKg(lbs) {
   return lbs / LBS_PER_KG;
 }
 
-export function kgToLbs(kg) {
+function kgToLbs(kg) {
   return kg * LBS_PER_KG;
 }
 
-export function feetInchesToCm(feet, inches) {
+function feetInchesToCm(feet, inches) {
   return (feet * 12 + inches) * CM_PER_INCH;
 }
 
-export function cmToFeetInches(cm) {
+function cmToFeetInches(cm) {
   const totalInches = cm / CM_PER_INCH;
   let feet = Math.floor(totalInches / 12);
   let inches = Math.round(totalInches - feet * 12);
@@ -24,19 +24,19 @@ export function cmToFeetInches(cm) {
   return { feet, inches };
 }
 
-export function calculateBMRMifflin(weightKg, heightCm, age, gender) {
+function calculateBMRMifflin(weightKg, heightCm, age, gender) {
   if (gender === 'male') {
     return 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
   }
   return 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
 }
 
-export function calculateBMRKatchMcArdle(weightKg, bodyFatPct) {
+function calculateBMRKatchMcArdle(weightKg, bodyFatPct) {
   const leanMassKg = weightKg * (1 - bodyFatPct / 100);
   return 370 + 21.6 * leanMassKg;
 }
 
-export function computeBMR({ weightKg, heightCm, age, gender, bodyFatPct }) {
+function computeBMR({ weightKg, heightCm, age, gender, bodyFatPct }) {
   if (bodyFatPct !== null && bodyFatPct !== undefined && !Number.isNaN(bodyFatPct)) {
     return {
       bmr: calculateBMRKatchMcArdle(weightKg, bodyFatPct),
@@ -49,11 +49,11 @@ export function computeBMR({ weightKg, heightCm, age, gender, bodyFatPct }) {
   };
 }
 
-export function formatNumber(value, decimals = 0) {
+function formatNumber(value, decimals = 0) {
   return Number(value.toFixed(decimals)).toLocaleString('en-US');
 }
 
-export function goalAdjustments(goal, tdee) {
+function goalAdjustments(goal, tdee) {
   const adjustments = {
     maintenance: {
       calories: tdee,
@@ -111,7 +111,7 @@ export function goalAdjustments(goal, tdee) {
   return adjustments[goal] || adjustments.maintenance;
 }
 
-export function calculateMacros(calories, proteinPct, fatPct, carbPct) {
+function calculateMacros(calories, proteinPct, fatPct, carbPct) {
   const proteinCalories = calories * proteinPct;
   const fatCalories = calories * fatPct;
   const carbCalories = calories * carbPct;
@@ -124,5 +124,20 @@ export function calculateMacros(calories, proteinPct, fatPct, carbPct) {
     fatPct,
     carbPct,
     split: `Protein ${Math.round(proteinPct * 100)}%, Fat ${Math.round(fatPct * 100)}%, Carbs ${Math.round(carbPct * 100)}%`,
+  };
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    lbsToKg,
+    kgToLbs,
+    feetInchesToCm,
+    cmToFeetInches,
+    calculateBMRMifflin,
+    calculateBMRKatchMcArdle,
+    computeBMR,
+    formatNumber,
+    goalAdjustments,
+    calculateMacros,
   };
 }
