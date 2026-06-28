@@ -36,29 +36,31 @@
         <div class="form-grid">
           <fieldset class="form-box">
             <legend>Personal details</legend>
-            <label>
-              Age
-              <input type="number" id="age" min="10" max="120" value="50" required />
-            </label>
+            <div class="field-row field-row-3">
+              <label>
+                Age
+                <input type="number" id="age" min="10" max="120" value="50" required />
+              </label>
 
-            <label>
-              Gender
-              <select id="gender">
-                <option value="female" selected>Female</option>
-                <option value="male">Male</option>
-              </select>
-            </label>
+              <label>
+                Gender
+                <select id="gender">
+                  <option value="female" selected>Female</option>
+                  <option value="male">Male</option>
+                </select>
+              </label>
 
-            <label>
-              <span class="label-row">
-                <span id="weightLabel">Weight (lbs)</span>
-                <span class="unit-toggle" id="weightUnitToggle" role="group" aria-label="Weight unit">
-                  <button type="button" class="unit-btn active" data-unit="lbs">lbs</button>
-                  <button type="button" class="unit-btn" data-unit="kg">kg</button>
+              <label>
+                <span class="label-row">
+                  <span id="weightLabel">Weight (lbs)</span>
+                  <span class="unit-toggle" id="weightUnitToggle" role="group" aria-label="Weight unit">
+                    <button type="button" class="unit-btn active" data-unit="lbs">lbs</button>
+                    <button type="button" class="unit-btn" data-unit="kg">kg</button>
+                  </span>
                 </span>
-              </span>
-              <input type="number" id="weight" min="70" max="400" step="0.1" value="113" required />
-            </label>
+                <input type="number" id="weight" min="70" max="400" step="0.1" value="113" required />
+              </label>
+            </div>
 
             <div class="label-row">
               <span>Height</span>
@@ -77,11 +79,8 @@
                 <input type="number" id="heightInches" min="0" max="11" step="1" value="3" required />
               </label>
             </div>
-            <div class="height-fields" id="heightCmGroup" hidden>
-              <label>
-                Height (cm)
-                <input type="number" id="heightCm" min="120" max="215" step="0.1" value="160" />
-              </label>
+            <div class="height-fields single" id="heightCmGroup" hidden>
+              <input type="number" id="heightCm" min="120" max="215" step="0.1" value="160" aria-label="Height in centimeters" />
             </div>
 
             <label>
@@ -93,32 +92,34 @@
 
           <fieldset class="form-box">
             <legend>Lifestyle and goal</legend>
-            <label>
-              Activity level
-              <select id="activity">
-                <option value="1.2">Sedentary (little or no exercise)</option>
-                <option value="1.375">Lightly active (1-3 days/week)</option>
-                <option value="1.55" selected>Moderately active (3-5 days/week)</option>
-                <option value="1.725">Very active (6-7 days/week)</option>
-                <option value="1.9">Extremely active (very intense daily)</option>
-              </select>
-            </label>
+            <div class="field-row field-row-3">
+              <label>
+                Activity level
+                <select id="activity">
+                  <option value="1.2">Sedentary (little or no exercise)</option>
+                  <option value="1.375">Lightly active (1-3 days/week)</option>
+                  <option value="1.55" selected>Moderately active (3-5 days/week)</option>
+                  <option value="1.725">Very active (6-7 days/week)</option>
+                  <option value="1.9">Extremely active (very intense daily)</option>
+                </select>
+              </label>
 
-            <label>
-              Goal (optional)
-              <select id="goal">
-                <option value="maintenance" selected>Maintenance</option>
-                <option value="fat_loss">Fat loss / Shredding</option>
-                <option value="lean_gain">Lean muscle build</option>
-                <option value="bulking">Bulking</option>
-              </select>
-            </label>
+              <label>
+                Goal (optional)
+                <select id="goal">
+                  <option value="maintenance" selected>Maintenance</option>
+                  <option value="fat_loss">Fat loss / Shredding</option>
+                  <option value="lean_gain">Lean muscle build</option>
+                  <option value="bulking">Bulking</option>
+                </select>
+              </label>
 
-            <label>
-              Custom timeframe (weeks)
-              <input type="number" id="customTimeframe" min="2" max="24" step="1" value="12" />
-              <span class="field-note">Enter the number of weeks you want to follow this plan, or keep the default goal timeframe.</span>
-            </label>
+              <label>
+                Custom timeframe (weeks)
+                <input type="number" id="customTimeframe" min="2" max="24" step="1" value="12" />
+                <span class="field-note">Enter the number of weeks you want to follow this plan, or keep the default goal timeframe.</span>
+              </label>
+            </div>
           </fieldset>
 
           <div class="form-box note-box">

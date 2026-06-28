@@ -192,6 +192,19 @@ label {
   gap: 12px;
 }
 
+.height-fields.single {
+  grid-template-columns: 1fr;
+}
+
+.field-row {
+  display: grid;
+  gap: 18px;
+}
+
+.field-row-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .label-row {
   display: flex;
   align-items: center;
@@ -235,11 +248,13 @@ fieldset {
 
 fieldset > label,
 fieldset > .height-fields,
-fieldset > .label-row {
+fieldset > .label-row,
+fieldset > .field-row {
   margin-top: 16px;
 }
 
-fieldset > label:first-of-type {
+fieldset > label:first-child,
+fieldset > .field-row:first-child {
   margin-top: 0;
 }
 
@@ -527,6 +542,12 @@ label > .field-note {
   color: var(--text-faint);
   font-size: 0.85rem;
   margin-top: 8px;
+}
+
+@media (max-width: 720px) {
+  .field-row-3 {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
