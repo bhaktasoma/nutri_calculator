@@ -58,7 +58,7 @@
                     <button type="button" class="unit-btn" data-unit="kg">kg</button>
                   </span>
                 </span>
-                <input type="number" id="weight" min="70" max="400" step="0.1" value="113" required />
+                <input type="number" id="weight" min="70" max="400" step="any" value="113" required />
               </label>
             </div>
 
@@ -73,13 +73,13 @@
               </label>
               <label>
                 Height (cm)
-                <input type="number" id="heightCm" min="120" max="215" step="0.1" value="160" />
+                <input type="number" id="heightCm" min="120" max="215" step="any" value="160" />
               </label>
             </div>
 
             <label>
               Body fat % (optional)
-              <input type="number" id="bodyFatPct" min="3" max="60" step="0.1" placeholder="e.g. 22" />
+              <input type="number" id="bodyFatPct" min="3" max="60" step="any" placeholder="e.g. 22" />
               <span class="field-note">Leave blank to use the Mifflin-St Jeor formula. If provided, the more accurate Katch-McArdle formula is used instead.</span>
             </label>
           </fieldset>

@@ -159,6 +159,17 @@ form.addEventListener('submit', (event) => {
   resultsSection.hidden = false;
   renderDonut(macros);
   resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  localStorage.setItem('nutri-calculator-last-result', JSON.stringify({
+    goal,
+    calories: adjustments.calories,
+    proteinPct: macros.proteinPct,
+    fatPct: macros.fatPct,
+    carbPct: macros.carbPct,
+    weightKg,
+    tdee,
+    savedAt: new Date().toISOString(),
+  }));
 });
 
 initTheme();

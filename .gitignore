@@ -1,0 +1,4 @@
+node_modules/
+
+# Local-only progress tracker — not ready to publish, kept out of git on purpose.
+/progress/
