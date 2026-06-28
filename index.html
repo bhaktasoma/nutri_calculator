@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>Nutrition Macro Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div class="header-bar">
+        <span class="badge">Free &amp; estimate-only</span>
+        <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark theme" aria-pressed="false">
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+      <h1>Nutrition Macro Calculator</h1>
+      <p>Calculate your daily calories and macro breakdown using age, gender, height, weight, and activity.</p>
+    </header>
+
+    <section class="card">
+      <h2>Personal Data</h2>
+      <form id="calc-form" novalidate>
+        <div class="form-grid">
+          <fieldset class="form-box">
+            <legend>Personal details</legend>
+            <label>
+              Age
+              <input type="number" id="age" min="10" max="120" value="50" required />
+            </label>
+
+            <label>
+              Gender
+              <select id="gender">
+                <option value="female" selected>Female</option>
+                <option value="male">Male</option>
+              </select>
+            </label>
+
+            <label>
+              Weight (lbs)
+              <input type="number" id="weight" min="70" max="400" step="0.1" value="113" required />
+            </label>
+
+            <div class="height-fields">
+              <label>
+                Height (ft)
+                <input type="number" id="heightFeet" min="4" max="7" step="1" value="5" required />
+              </label>
+              <label>
+                Height (in)
+                <input type="number" id="heightInches" min="0" max="11" step="1" value="3" required />
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-box">
+            <legend>Lifestyle and goal</legend>
+            <label>
+              Activity level
+              <select id="activity">
+                <option value="1.2">Sedentary (little or no exercise)</option>
+                <option value="1.375">Lightly active (1-3 days/week)</option>
+                <option value="1.55" selected>Moderately active (3-5 days/week)</option>
+                <option value="1.725">Very active (6-7 days/week)</option>
+                <option value="1.9">Extremely active (very intense daily)</option>
+              </select>
+            </label>
+
+            <label>
+              Goal (optional)
+              <select id="goal">
+                <option value="maintenance" selected>Maintenance</option>
+                <option value="fat_loss">Fat loss / Shredding</option>
+                <option value="lean_gain">Lean muscle build</option>
+                <option value="bulking">Bulking</option>
+              </select>
+            </label>
+
+            <label>
+              Custom timeframe (weeks)
+              <input type="number" id="customTimeframe" min="2" max="24" step="1" value="12" />
+              <span class="field-note">Enter the number of weeks you want to follow this plan, or keep the default goal timeframe.</span>
+            </label>
+          </fieldset>
+
+          <div class="form-box note-box">
+            <h3>Notes</h3>
+            <p>Select a goal and optionally choose a custom timeframe to see target calories, macros, and progress benchmarks.</p>
+            <ul>
+              <li><strong>Maintenance:</strong> keep calories stable and review every 4 weeks.</li>
+              <li><strong>Fat loss / Shredding:</strong> reduce 10–15% of TDEE for about 6–12 weeks.</li>
+              <li><strong>Lean muscle build:</strong> increase 5–10% of TDEE for 8–16 weeks while training consistently.</li>
+              <li><strong>Bulking:</strong> increase 10–15% of TDEE for 8–12 weeks and then reassess.</li>
+            </ul>
+          </div>
+        </div>
+
+        <button type="submit">Calculate</button>
+      </form>
+    </section>
+
+    <section class="card results" id="results" hidden>
+      <h2>Your Results</h2>
+
+      <div class="results-hero">
+        <div class="hero-stat primary">
+          <span class="hero-label">Target calories</span>
+          <span class="hero-value"><span id="targetValue">0</span><small>kcal/day</small></span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-label">BMR</span>
+          <span class="hero-value"><span id="bmrValue">0</span><small>kcal</small></span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-label">TDEE</span>
+          <span class="hero-value"><span id="tdeeValue">0</span><small>kcal</small></span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-label">Goal</span>
+          <span class="hero-value goal-text" id="goalValue">—</span>
+        </div>
+      </div>
+
+      <div class="macro-bars">
+        <div class="macro-row">
+          <div class="macro-label"><span class="dot dot-protein"></span>Protein</div>
+          <div class="macro-track"><div class="macro-fill fill-protein" id="proteinBar"></div></div>
+          <div class="macro-amount"><span id="proteinValue">0</span> g</div>
+        </div>
+        <div class="macro-row">
+          <div class="macro-label"><span class="dot dot-fat"></span>Fat</div>
+          <div class="macro-track"><div class="macro-fill fill-fat" id="fatBar"></div></div>
+          <div class="macro-amount"><span id="fatValue">0</span> g</div>
+        </div>
+        <div class="macro-row">
+          <div class="macro-label"><span class="dot dot-carb"></span>Carbs</div>
+          <div class="macro-track"><div class="macro-fill fill-carb" id="carbBar"></div></div>
+          <div class="macro-amount"><span id="carbValue">0</span> g</div>
+        </div>
+      </div>
+      <p class="macro-split-note" id="macroSplitValue">Protein 25%, Fat 30%, Carbs 45%</p>
+
+      <div class="benchmark-grid">
+        <div class="result-item"><strong>Weight benchmark</strong><span id="weightBenchmark"></span></div>
+        <div class="result-item"><strong>Body fat benchmark</strong><span id="bodyFatBenchmark"></span></div>
+        <div class="result-item"><strong>Strength benchmark</strong><span id="strengthBenchmark"></span></div>
+        <div class="result-item"><strong>Recommended timeframe</strong><span id="goalTimeline"></span></div>
+        <div class="result-item"><strong>Advice</strong><span id="goalAdvice"></span></div>
+        <div class="result-item"><strong>Next step</strong><span id="nextStep"></span></div>
+      </div>
+    </section>
+
+    <section class="card docs">
+      <h2>How it works</h2>
+      <p>This calculator estimates your daily energy needs and macro targets using:</p>
+      <ul>
+        <li><strong>BMR</strong> (Basal Metabolic Rate): energy required at rest</li>
+        <li><strong>Activity factor</strong>: adjusts BMR for your daily exercise and movement</li>
+        <li><strong>Macro percentages</strong>: a balanced daily breakdown for protein, fat, and carbs</li>
+      </ul>
+
+      <h3>Formula details</h3>
+      <p><strong>Step 1:</strong> Convert units</p>
+      <ul>
+        <li>Weight in kg = weight (lbs) × 0.453592</li>
+        <li>Height in cm = feet × 30.48 + inches × 2.54</li>
+      </ul>
+
+      <p><strong>Step 2:</strong> Calculate BMR with Mifflin-St Jeor</p>
+      <pre>BMR = 10 × weight_kg + 6.25 × height_cm - 5 × age - 161 (female)
+BMR = 10 × weight_kg + 6.25 × height_cm - 5 × age + 5 (male)</pre>
+
+      <p><strong>Step 3:</strong> Adjust for activity</p>
+      <pre>TDEE = BMR × activity factor</pre>
+      <p>Common factors:</p>
+      <ul>
+        <li>1.2 sedentary</li>
+        <li>1.375 lightly active</li>
+        <li>1.55 moderately active</li>
+        <li>1.725 very active</li>
+        <li>1.9 extremely active</li>
+      </ul>
+
+      <p><strong>Step 4:</strong> Build macros</p>
+      <pre>Protein = 25% of calories ÷ 4 kcal/g
+Fat = 30% of calories ÷ 9 kcal/g
+Carbs = 45% of calories ÷ 4 kcal/g</pre>
+
+      <p>This is a guideline for daily maintenance. Adjust calories and macros based on your goal:</p>
+      <ul>
+        <li><strong>Maintenance:</strong> use TDEE as-is with a balanced macro split.</li>
+        <li><strong>Fat loss / Shredding:</strong> reduce about 10–15% from TDEE and raise protein slightly.</li>
+        <li><strong>Lean muscle build:</strong> increase about 5–10% from TDEE and keep protein high with moderate carbs.</li>
+        <li><strong>Bulking:</strong> increase about 10–15% from TDEE and support growth with slightly higher carbs.</li>
+      </ul>
+
+      <p>Always treat this as an estimate and check with a qualified dietitian for personalized advice.</p>
+    </section>
+
+    <footer class="site-footer">
+      <p>Estimates only — not a substitute for medical or nutritional advice.</p>
+    </footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
