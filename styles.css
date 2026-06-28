@@ -186,16 +186,6 @@ label {
   color: var(--text);
 }
 
-.height-fields {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.height-fields.single {
-  grid-template-columns: 1fr;
-}
-
 .field-row {
   display: grid;
   gap: 18px;
@@ -247,8 +237,6 @@ fieldset {
 }
 
 fieldset > label,
-fieldset > .height-fields,
-fieldset > .label-row,
 fieldset > .field-row {
   margin-top: 16px;
 }

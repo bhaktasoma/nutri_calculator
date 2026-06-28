@@ -47,16 +47,12 @@ const customTimeframe = document.getElementById('customTimeframe');
 const weightInput = document.getElementById('weight');
 const weightLabel = document.getElementById('weightLabel');
 const weightUnitToggle = document.getElementById('weightUnitToggle');
-const heightUnitToggle = document.getElementById('heightUnitToggle');
-const heightFtIn = document.getElementById('heightFtIn');
-const heightCmGroup = document.getElementById('heightCmGroup');
 const heightFeetInput = document.getElementById('heightFeet');
 const heightInchesInput = document.getElementById('heightInches');
 const heightCmInput = document.getElementById('heightCm');
 const bodyFatPctInput = document.getElementById('bodyFatPct');
 
 let weightUnit = 'lbs';
-let heightUnit = 'ftin';
 
 function initUnitToggle(container, onChange) {
   container.addEventListener('click', (event) => {
@@ -83,28 +79,20 @@ initUnitToggle(weightUnitToggle, (unit) => {
   weightUnit = unit;
 });
 
-initUnitToggle(heightUnitToggle, (unit) => {
-  if (unit === heightUnit) return;
-  if (unit === 'cm') {
-    const cm = feetInchesToCm(Number(heightFeetInput.value), Number(heightInchesInput.value));
-    heightCmInput.value = cm.toFixed(1);
-    heightFtIn.hidden = true;
-    heightCmGroup.hidden = false;
-    heightFeetInput.required = false;
-    heightInchesInput.required = false;
-    heightCmInput.required = true;
-  } else {
-    const { feet, inches } = cmToFeetInches(Number(heightCmInput.value));
-    heightFeetInput.value = feet;
-    heightInchesInput.value = inches;
-    heightFtIn.hidden = false;
-    heightCmGroup.hidden = true;
-    heightFeetInput.required = true;
-    heightInchesInput.required = true;
-    heightCmInput.required = false;
-  }
-  heightUnit = unit;
-});
+function syncCmFromFeetInches() {
+  const cm = feetInchesToCm(Number(heightFeetInput.value) || 0, Number(heightInchesInput.value) || 0);
+  heightCmInput.value = cm.toFixed(1);
+}
+
+function syncFeetInchesFromCm() {
+  const { feet, inches } = cmToFeetInches(Number(heightCmInput.value) || 0);
+  heightFeetInput.value = feet;
+  heightInchesInput.value = inches;
+}
+
+heightFeetInput.addEventListener('input', syncCmFromFeetInches);
+heightInchesInput.addEventListener('input', syncCmFromFeetInches);
+heightCmInput.addEventListener('input', syncFeetInchesFromCm);
 
 function getWeightKg() {
   const value = Number(weightInput.value);
@@ -112,10 +100,7 @@ function getWeightKg() {
 }
 
 function getHeightCm() {
-  if (heightUnit === 'cm') {
-    return Number(heightCmInput.value);
-  }
-  return feetInchesToCm(Number(heightFeetInput.value), Number(heightInchesInput.value));
+  return Number(heightCmInput.value);
 }
 
 function renderDonut(macros) {

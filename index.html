@@ -62,14 +62,7 @@
               </label>
             </div>
 
-            <div class="label-row">
-              <span>Height</span>
-              <span class="unit-toggle" id="heightUnitToggle" role="group" aria-label="Height unit">
-                <button type="button" class="unit-btn active" data-unit="ftin">ft/in</button>
-                <button type="button" class="unit-btn" data-unit="cm">cm</button>
-              </span>
-            </div>
-            <div class="height-fields" id="heightFtIn">
+            <div class="field-row field-row-3">
               <label>
                 Height (ft)
                 <input type="number" id="heightFeet" min="4" max="7" step="1" value="5" required />
@@ -78,9 +71,10 @@
                 Height (in)
                 <input type="number" id="heightInches" min="0" max="11" step="1" value="3" required />
               </label>
-            </div>
-            <div class="height-fields single" id="heightCmGroup" hidden>
-              <input type="number" id="heightCm" min="120" max="215" step="0.1" value="160" aria-label="Height in centimeters" />
+              <label>
+                Height (cm)
+                <input type="number" id="heightCm" min="120" max="215" step="0.1" value="160" />
+              </label>
             </div>
 
             <label>
