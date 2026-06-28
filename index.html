@@ -50,11 +50,24 @@
             </label>
 
             <label>
-              Weight (lbs)
+              <span class="label-row">
+                <span id="weightLabel">Weight (lbs)</span>
+                <span class="unit-toggle" id="weightUnitToggle" role="group" aria-label="Weight unit">
+                  <button type="button" class="unit-btn active" data-unit="lbs">lbs</button>
+                  <button type="button" class="unit-btn" data-unit="kg">kg</button>
+                </span>
+              </span>
               <input type="number" id="weight" min="70" max="400" step="0.1" value="113" required />
             </label>
 
-            <div class="height-fields">
+            <div class="label-row">
+              <span>Height</span>
+              <span class="unit-toggle" id="heightUnitToggle" role="group" aria-label="Height unit">
+                <button type="button" class="unit-btn active" data-unit="ftin">ft/in</button>
+                <button type="button" class="unit-btn" data-unit="cm">cm</button>
+              </span>
+            </div>
+            <div class="height-fields" id="heightFtIn">
               <label>
                 Height (ft)
                 <input type="number" id="heightFeet" min="4" max="7" step="1" value="5" required />
@@ -64,6 +77,18 @@
                 <input type="number" id="heightInches" min="0" max="11" step="1" value="3" required />
               </label>
             </div>
+            <div class="height-fields" id="heightCmGroup" hidden>
+              <label>
+                Height (cm)
+                <input type="number" id="heightCm" min="120" max="215" step="0.1" value="160" />
+              </label>
+            </div>
+
+            <label>
+              Body fat % (optional)
+              <input type="number" id="bodyFatPct" min="3" max="60" step="0.1" placeholder="e.g. 22" />
+              <span class="field-note">Leave blank to use the Mifflin-St Jeor formula. If provided, the more accurate Katch-McArdle formula is used instead.</span>
+            </label>
           </fieldset>
 
           <fieldset class="form-box">
@@ -123,6 +148,7 @@
         <div class="hero-stat">
           <span class="hero-label">BMR</span>
           <span class="hero-value"><span id="bmrValue">0</span><small>kcal</small></span>
+          <small class="bmr-method" id="bmrMethod">Mifflin-St Jeor</small>
         </div>
         <div class="hero-stat">
           <span class="hero-label">TDEE</span>
@@ -134,22 +160,18 @@
         </div>
       </div>
 
-      <div class="macro-bars">
-        <div class="macro-row">
-          <div class="macro-label"><span class="dot dot-protein"></span>Protein</div>
-          <div class="macro-track"><div class="macro-fill fill-protein" id="proteinBar"></div></div>
-          <div class="macro-amount"><span id="proteinValue">0</span> g</div>
+      <div class="macro-chart">
+        <div class="donut" id="macroDonut">
+          <div class="donut-center">
+            <span class="donut-value" id="donutCalories">0</span>
+            <span class="donut-label">kcal</span>
+          </div>
         </div>
-        <div class="macro-row">
-          <div class="macro-label"><span class="dot dot-fat"></span>Fat</div>
-          <div class="macro-track"><div class="macro-fill fill-fat" id="fatBar"></div></div>
-          <div class="macro-amount"><span id="fatValue">0</span> g</div>
-        </div>
-        <div class="macro-row">
-          <div class="macro-label"><span class="dot dot-carb"></span>Carbs</div>
-          <div class="macro-track"><div class="macro-fill fill-carb" id="carbBar"></div></div>
-          <div class="macro-amount"><span id="carbValue">0</span> g</div>
-        </div>
+        <ul class="macro-legend">
+          <li><span class="dot dot-protein"></span>Protein <strong id="proteinValue">0</strong> g <span class="legend-pct" id="proteinPctLabel"></span></li>
+          <li><span class="dot dot-fat"></span>Fat <strong id="fatValue">0</strong> g <span class="legend-pct" id="fatPctLabel"></span></li>
+          <li><span class="dot dot-carb"></span>Carbs <strong id="carbValue">0</strong> g <span class="legend-pct" id="carbPctLabel"></span></li>
+        </ul>
       </div>
       <p class="macro-split-note" id="macroSplitValue">Protein 25%, Fat 30%, Carbs 45%</p>
 
@@ -179,9 +201,14 @@
         <li>Height in cm = feet × 30.48 + inches × 2.54</li>
       </ul>
 
-      <p><strong>Step 2:</strong> Calculate BMR with Mifflin-St Jeor</p>
-      <pre>BMR = 10 × weight_kg + 6.25 × height_cm - 5 × age - 161 (female)
-BMR = 10 × weight_kg + 6.25 × height_cm - 5 × age + 5 (male)</pre>
+      <p><strong>Step 2:</strong> Calculate BMR</p>
+      <pre>Mifflin-St Jeor (used by default):
+BMR = 10 × weight_kg + 6.25 × height_cm - 5 × age - 161 (female)
+BMR = 10 × weight_kg + 6.25 × height_cm - 5 × age + 5 (male)
+
+Katch-McArdle (used when body fat % is provided):
+BMR = 370 + 21.6 × lean_mass_kg
+lean_mass_kg = weight_kg × (1 - body_fat_pct / 100)</pre>
 
       <p><strong>Step 3:</strong> Adjust for activity</p>
       <pre>TDEE = BMR × activity factor</pre>
@@ -214,6 +241,6 @@ Carbs = 45% of calories ÷ 4 kcal/g</pre>
       <p>Estimates only — not a substitute for medical or nutritional advice.</p>
     </footer>
   </main>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
